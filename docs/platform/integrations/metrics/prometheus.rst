@@ -38,9 +38,10 @@ follow the steps below:
 #. | Add a ``Prometheus`` integration endpoint if one does not already
      exist
 
-   .. image:: /images/platform/integrations/prometheus-service-integration.png
+   .. image:: /images/platform/integrations/prometheus-service-integration-updated.png
+       :scale: 55%
 
-   | 
+   |
    | Remember to click the ``+`` button after naming your endpoint
      otherwise it will not be saved when you leave the page. You will
      know it is set up correctly when an automatically generated
@@ -74,21 +75,11 @@ follow the steps below:
 
    .. image:: /images/platform/integrations/prometheus-service-info.png
 
+
+
 After finishing these steps, the system will start an HTTP server on all
 nodes of the service that provide access to the metrics. Note that there
 can be roughly one minute delay until the metrics are available.
-
-Aiven provides the Prometheus client via the `Telegraf
-plugin <https://github.com/influxdata/telegraf/tree/master/plugins/outputs/prometheus_client>`__
-so all the same metrics that are available via the Aiven InfluxDB
-metrics integration are also available via the Prometheus integration.
-You can easily see the full list of metrics by accessing the
-``https://service-hostname:port/metrics`` resource for a service that
-has Prometheus integration enabled (or once Prometheus server is running
-from that server directly). Note that for some services the metrics
-provided by different hosts may vary depending on the host role. Most
-notably for Kafka only one of the nodes provides metrics related to
-consumer group offsets.
 
 Often the users have VPC enabled in their projects. If this was the
 case, the property **public_access.prometheus** needs to be enabled in
@@ -101,6 +92,9 @@ Configuring your Prometheus server
 To make Prometheus fetch metrics from Aiven servers you'll need to add a
 new scrape configuration with appropriate basic auth parameters (as seen on the
 Service Integrations page) and identify the servers to pull data from.
+
+Handling DNS resolution to multiple nodes
+'''''''''''''''''''''''''''''''''''''''''
 
 For any services that consist of multiple nodes and each node doesn't
 have its own unique DNS name, you need to use the ``dns_sd_configs``
@@ -118,15 +112,19 @@ setting.
      - job_name: aivenmetrics
        scheme: https
        basic_auth:
-         username: prom4ffi
-         password: vf1q2yijvizrj2ry
+         username: <PROMETHEUS_USERNAME>
+         password: <PROMETHEUS_PASSWORD>
        dns_sd_configs:
          - names:
-             - kafka-test-rikonen.aivencloud.com
+             - <SERVICE_URI>
            type: A
            port: 9273
        tls_config:
          insecure_skip_verify: true
+
+
+Handling single node DNS resolution
+'''''''''''''''''''''''''''''''''''
 
 For services where a DNS name resolves to only single node using
 ``static_configs`` instead of ``dns_sd_configs`` may be preferable as it
@@ -139,3 +137,23 @@ web console or alternatively the `Aiven command line
 client <https://github.com/aiven/aiven-client/>`__ can be used (
 ``avn project ca-get --target-filepath TARGET_FILEPATH`` ). The file is
 identical for all services in the same project.
+
+View full list of metrics
+''''''''''''''''''''''''''
+
+Aiven provides the Prometheus client via the Telegraf plugin so all the same
+metrics that are available via the Aiven InfluxDB metrics integration are also
+available via the Prometheus integration. You can see the full list of metrics
+with our `help article
+<https://help.aiven.io/en/articles/5144867-aiven-service-metrics>` __.
+
+.. note:: Note that for some services the metrics provided by different hosts may vary depending on the host role. Most notably for Kafka only one of the nodes provides metrics related to consumer group offsets.
+
+Accessing Prometheus in a VPC
+''''''''''''''''''''''''''''''
+
+Often the users have VPC enabled in their projects. If this was the case, the
+property public_access.prometheus needs to be enabled in the Advanced
+Configurations of the service.
+
+.. image:: /images/platform/integrations/prometheus-advanced-configurations.png
