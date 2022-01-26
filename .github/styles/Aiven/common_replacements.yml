@@ -37,3 +37,13 @@ swap:
   'Aiven Kafka MirrorMaker': 'Aiven for Apache Kafka MirrorMaker 2'
   'Aiven Apache Kafka MirrorMaker': 'Aiven for Apache Kafka MirrorMaker 2'
   'Aiven for Kafka MirrorMaker': 'Aiven for Apache Kafka MirrorMaker 2'
+  #
+  # "Registered" marks - this section is experimental and incomplete
+  #
+  # Since `®` is not a "letter", the `observed` term "Kafka" will happily
+  # match both "Kafka" (no `®`) and "Kafka®".
+  # We need to do negative lookahead to check that the `®` is missing
+  # after the word.
+  "Flink(?!®)": "Flink®"
+  "Kafka(?!®)": "Kafka®"
+  "MirrorMaker 2(?!®)": "MirrorMaker 2®"
