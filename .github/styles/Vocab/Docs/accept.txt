@@ -8,6 +8,7 @@ Avro
 [Bb]oolean
 [Bb]oot
 [Bb]usiness
+ClickHouse
 Conduktor
 [Cc]onnect
 Couchbase
@@ -45,6 +46,7 @@ Hillyer
 httpie
 hyperloglogs
 hypertable
+InfluxDB
 Instana
 Java
 jq
@@ -64,7 +66,6 @@ Lua
 Lucene
 Memorystore
 MirrorMaker
-MirrorMaker2
 MySQL
 [Nn]amespace
 NodeJS
