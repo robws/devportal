@@ -9,7 +9,7 @@ Avro
 [Bb]oot
 [Bb]usiness
 ClickHouse
-[Cc]odecs
+codecs
 Conduktor
 [Cc]onnect
 Couchbase
