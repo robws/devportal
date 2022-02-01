@@ -132,3 +132,4 @@ You can use the Aiven platform in the way that best fits your workflow:
 
 * The :doc:`docs/tools/kubernetes` adds orchestration of your Aiven services to your existing Kubernetes cluster.
 
+* The :doc:`readme link <docs/readme_link>` is shortcutted here..
